@@ -11,7 +11,7 @@ type rucksack struct {
 	secondCompartment string
 }
 
-func readData(filename string, rucksacks chan rucksack) {
+func readData(filename string, rucksacks chan<- rucksack) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic("failed opening file")
@@ -29,10 +29,10 @@ func readData(filename string, rucksacks chan rucksack) {
 	close(rucksacks)
 }
 
-func PrioSum(filename string) int32 {
-	rucksacks := make(chan rucksack, 1)
+func PrioSum(filename string) uint32 {
+	rucksacks := make(chan rucksack, 10)
 	go readData(filename, rucksacks)
-	sum := int32(0)
+	sum := uint32(0)
 	for r := range rucksacks {
 		for _, letter := range r.firstCompartment {
 			if strings.ContainsRune(r.secondCompartment, letter) {
@@ -45,10 +45,10 @@ func PrioSum(filename string) int32 {
 	return sum
 }
 
-func BatchSum(filename string) int32 {
-	rucksacks := make(chan rucksack, 3)
+func BatchSum(filename string) uint32 {
+	rucksacks := make(chan rucksack, 30)
 	go readData(filename, rucksacks)
-	sum := int32(0)
+	sum := uint32(0)
 	for ruck0 := range rucksacks {
 		ruck1 := <-rucksacks
 		ruck2 := <-rucksacks
@@ -66,9 +66,9 @@ func BatchSum(filename string) int32 {
 	return sum
 }
 
-func letterToPrio(letter rune) int32 {
+func letterToPrio(letter rune) uint32 {
 	if letter >= 65 && letter <= 90 {
-		return int32(letter - 38)
+		return uint32(letter - 38)
 	}
-	return int32(letter - 96)
+	return uint32(letter - 96)
 }

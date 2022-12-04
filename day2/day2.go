@@ -6,13 +6,13 @@ import (
 	"strings"
 )
 
-var myChoiceToStandard = map[string]string{
+var myChoiceNormalized = map[string]string{
 	"X": "R",
 	"Y": "P",
 	"Z": "S",
 }
 
-var otherChoiceToStandard = map[string]string{
+var otherChoiceNormalized = map[string]string{
 	"A": "R",
 	"B": "P",
 	"C": "S",
@@ -23,7 +23,7 @@ type round struct {
 	myChoice    string
 }
 
-func readData(filename string, rounds chan round) {
+func readData(filename string, rounds chan<- round) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic("failed opening file")
@@ -40,33 +40,33 @@ func readData(filename string, rounds chan round) {
 	close(rounds)
 }
 
-func roundResult(round round) int {
-	if myChoiceToStandard[round.myChoice] == otherChoiceToStandard[round.otherChoice] {
+func roundResult(round round) uint32 {
+	if myChoiceNormalized[round.myChoice] == otherChoiceNormalized[round.otherChoice] {
 		return 3
-	} else if (myChoiceToStandard[round.myChoice] == "R" && otherChoiceToStandard[round.otherChoice] == "S") || (myChoiceToStandard[round.myChoice] == "S" && otherChoiceToStandard[round.otherChoice] == "P") || (myChoiceToStandard[round.myChoice] == "P" && otherChoiceToStandard[round.otherChoice] == "R") {
+	} else if (myChoiceNormalized[round.myChoice] == "R" && otherChoiceNormalized[round.otherChoice] == "S") || (myChoiceNormalized[round.myChoice] == "S" && otherChoiceNormalized[round.otherChoice] == "P") || (myChoiceNormalized[round.myChoice] == "P" && otherChoiceNormalized[round.otherChoice] == "R") {
 		return 6
 	} else {
 		return 0
 	}
 }
 
-func Points1(filename string) int {
-	choiceToPoints := map[string]int{
+func Points1(filename string) uint32 {
+	choiceToPoints := map[string]uint32{
 		"X": 1,
 		"Y": 2,
 		"Z": 3,
 	}
 
-	rounds := make(chan round, 1)
+	rounds := make(chan round, 10)
 	go readData(filename, rounds)
-	points := 0
+	points := uint32(0)
 	for round := range rounds {
 		points += choiceToPoints[round.myChoice] + roundResult(round)
 	}
 	return points
 }
 
-func findChoice(round round) int {
+func findChoice(round round) uint32 {
 	if round.otherChoice == "A" {
 		if round.myChoice == "X" {
 			return 3
@@ -94,16 +94,16 @@ func findChoice(round round) int {
 	}
 }
 
-func Points2(filename string) int {
-	resultToPoints := map[string]int{
+func Points2(filename string) uint32 {
+	resultToPoints := map[string]uint32{
 		"X": 0,
 		"Y": 3,
 		"Z": 6,
 	}
 
-	rounds := make(chan round, 1)
+	rounds := make(chan round, 10)
 	go readData(filename, rounds)
-	points := 0
+	points := uint32(0)
 	for round := range rounds {
 		points += resultToPoints[round.myChoice] + findChoice(round)
 	}

@@ -8,17 +8,25 @@ import (
 )
 
 type elf struct {
-	calorieItems []int
+	calorieItems []uint32
 }
 
-func readData(filename string, elves chan elf) {
+func (e elf) totalCalories() uint32 {
+	sum := uint32(0)
+	for _, calorieItem := range e.calorieItems {
+		sum += calorieItem
+	}
+	return sum
+}
+
+func readData(filename string, elves chan<- elf) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic("failed opening file")
 	}
 	defer file.Close()
 
-	lines := make([]int, 0)
+	lines := make([]uint32, 0)
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
@@ -26,23 +34,23 @@ func readData(filename string, elves chan elf) {
 		line := scanner.Text()
 		if line == "" {
 			elves <- elf{lines}
-			lines = make([]int, 0)
+			lines = make([]uint32, 0)
 		} else {
 			i, _ := strconv.Atoi(line)
-			lines = append(lines, i)
+			lines = append(lines, uint32(i))
 		}
 	}
 	elves <- elf{lines}
 	close(elves)
 }
 
-func Calories(filename string) int {
-	elves := make(chan elf, 1)
+func Calories(filename string) uint32 {
+	elves := make(chan elf, 10)
 	go readData(filename, elves)
 
-	max := 0
+	max := uint32(0)
 	for elf := range elves {
-		sum := 0
+		sum := uint32(0)
 		for _, c := range elf.calorieItems {
 			sum += c
 		}
@@ -53,21 +61,17 @@ func Calories(filename string) int {
 	return max
 }
 
-func CaloriesTop3(filename string) int {
-	elves := make(chan elf, 1)
+func CaloriesTop3(filename string) uint32 {
+	elves := make(chan elf, 10)
 	go readData(filename, elves)
 
-	allCalories := make([]int, 0)
+	allCalories := make([]uint32, 0)
 
 	for elf := range elves {
-		sum := 0
-		for _, calorieItem := range elf.calorieItems {
-			sum += calorieItem
-		}
-		allCalories = append(allCalories, sum)
+		allCalories = append(allCalories, elf.totalCalories())
 	}
 
-	sort.Ints(allCalories)
+	sort.Slice(allCalories, func(i, j int) bool { return allCalories[i] > allCalories[j] })
 
-	return allCalories[len(allCalories)-1] + allCalories[len(allCalories)-2] + allCalories[len(allCalories)-3]
+	return allCalories[0] + allCalories[1] + allCalories[2]
 }
