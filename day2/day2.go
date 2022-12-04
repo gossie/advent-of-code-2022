@@ -23,23 +23,21 @@ type round struct {
 	myChoice    string
 }
 
-func readData(filename string) []round {
+func readData(filename string, rounds chan round) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic("failed opening file")
 	}
 	defer file.Close()
 
-	lines := make([]round, 0)
-
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
 	for scanner.Scan() {
 		line := scanner.Text()
 		choices := strings.Split(line, " ")
-		lines = append(lines, round{choices[0], choices[1]})
+		rounds <- round{choices[0], choices[1]}
 	}
-	return lines
+	close(rounds)
 }
 
 func roundResult(round round) int {
@@ -59,9 +57,10 @@ func Points1(filename string) int {
 		"Z": 3,
 	}
 
-	rounds := readData(filename)
+	rounds := make(chan round, 1)
+	go readData(filename, rounds)
 	points := 0
-	for _, round := range rounds {
+	for round := range rounds {
 		points += choiceToPoints[round.myChoice] + roundResult(round)
 	}
 	return points
@@ -102,9 +101,10 @@ func Points2(filename string) int {
 		"Z": 6,
 	}
 
-	rounds := readData(filename)
+	rounds := make(chan round, 1)
+	go readData(filename, rounds)
 	points := 0
-	for _, round := range rounds {
+	for round := range rounds {
 		points += resultToPoints[round.myChoice] + findChoice(round)
 	}
 	return points

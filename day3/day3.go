@@ -11,14 +11,12 @@ type rucksack struct {
 	secondCompartment string
 }
 
-func readData(filename string) []rucksack {
+func readData(filename string, rucksacks chan rucksack) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic("failed opening file")
 	}
 	defer file.Close()
-
-	lines := make([]rucksack, 0)
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
@@ -26,32 +24,38 @@ func readData(filename string) []rucksack {
 		line := scanner.Text()
 		compartment1 := line[0 : len(line)/2]
 		compartment2 := line[len(line)/2:]
-		lines = append(lines, rucksack{compartment1, compartment2})
+		rucksacks <- rucksack{compartment1, compartment2}
 	}
-	return lines
+	close(rucksacks)
 }
 
 func PrioSum(filename string) int32 {
-	rucksacks := readData(filename)
+	rucksacks := make(chan rucksack, 1)
+	go readData(filename, rucksacks)
 	sum := int32(0)
-	for _, r := range rucksacks {
+	for r := range rucksacks {
 		for _, letter := range r.firstCompartment {
 			if strings.ContainsRune(r.secondCompartment, letter) {
 				sum += letterToPrio(letter)
 				break
 			}
+
 		}
 	}
 	return sum
 }
 
 func BatchSum(filename string) int32 {
-	rucksacks := readData(filename)
+	rucksacks := make(chan rucksack, 3)
+	go readData(filename, rucksacks)
 	sum := int32(0)
-	for i := 0; i < len(rucksacks); i += 3 {
-		r0 := rucksacks[i].firstCompartment + rucksacks[i].secondCompartment
-		r1 := rucksacks[i+1].firstCompartment + rucksacks[i+1].secondCompartment
-		r2 := rucksacks[i+2].firstCompartment + rucksacks[i+2].secondCompartment
+	for ruck0 := range rucksacks {
+		ruck1 := <-rucksacks
+		ruck2 := <-rucksacks
+
+		r0 := ruck0.firstCompartment + ruck0.secondCompartment
+		r1 := ruck1.firstCompartment + ruck1.secondCompartment
+		r2 := ruck2.firstCompartment + ruck2.secondCompartment
 		for _, letter := range r0 {
 			if strings.ContainsRune(r1, letter) && strings.ContainsRune(r2, letter) {
 				sum += letterToPrio(letter)
