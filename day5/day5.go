@@ -2,6 +2,11 @@ package day5
 
 import (
 	"bufio"
+	"image"
+	"image/color"
+	"image/draw"
+	"image/gif"
+	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -70,6 +75,14 @@ func readData(filename string, stacks chan<- []util.Stack[string], instructions 
 	close(instructions)
 }
 
+func toResult(stacks []util.Stack[string]) string {
+	result := ""
+	for _, s := range stacks {
+		result += s[0]
+	}
+	return result
+}
+
 func Crates9000(filename string) string {
 	stacks := make(chan []util.Stack[string], 1)
 	instructions := make(chan instruction, 10)
@@ -78,6 +91,9 @@ func Crates9000(filename string) string {
 
 	importedStacks := <-stacks
 
+	images := make([]*image.Paletted, 0)
+	images = append(images, createImage(importedStacks))
+
 	for instruct := range instructions {
 		for i := 0; i < instruct.amount; i++ {
 			cargo, err := importedStacks[instruct.from].Pop()
@@ -85,24 +101,24 @@ func Crates9000(filename string) string {
 				panic(err)
 			}
 			importedStacks[instruct.to].Push(cargo)
+			images = append(images, createImage(importedStacks))
 		}
 	}
+	createGif("day5-task1.gif", images)
 
-	result := ""
-	for _, s := range importedStacks {
-		result += s[0]
-	}
-
-	return result
+	return toResult(importedStacks)
 }
 
 func Crates9001(filename string) string {
 	stacks := make(chan []util.Stack[string], 1)
-	instructions := make(chan instruction, 10)
+	instructions := make(chan instruction, 1)
 
 	go readData(filename, stacks, instructions)
 
 	importedStacks := <-stacks
+
+	images := make([]*image.Paletted, 0)
+	images = append(images, createImage(importedStacks))
 
 	for instruct := range instructions {
 		cargo, err := importedStacks[instruct.from].PopMultiple(instruct.amount)
@@ -110,12 +126,62 @@ func Crates9001(filename string) string {
 			panic(err)
 		}
 		importedStacks[instruct.to].PushAll(cargo)
+		images = append(images, createImage(importedStacks))
+	}
+	createGif("day5-task2.gif", images)
+
+	return toResult(importedStacks)
+}
+
+func createGif(name string, images []*image.Paletted) {
+	f, err := os.OpenFile(name, os.O_WRONLY|os.O_CREATE, 0600)
+	if err != nil {
+		log.Println("gif could not be created: ", err)
+	}
+	defer f.Close()
+
+	delays := make([]int, len(images))
+	for i := 0; i < len(delays); i++ {
+		delays[i] = 5
+	}
+	delays[len(delays)-1] = 500
+
+	gif.EncodeAll(f, &gif.GIF{
+		Image: images,
+		Delay: delays,
+	})
+}
+
+func createImage(event []util.Stack[string]) *image.Paletted {
+	palette := []color.Color{
+		color.White,
+		color.Black,
+		color.RGBA{0x00, 0x00, 0xff, 0xff},
 	}
 
-	result := ""
-	for _, s := range importedStacks {
-		result += s[0]
+	highest := 0
+	for _, stack := range event {
+		if stack.Len() > highest {
+			highest = stack.Len()
+		}
 	}
 
-	return result
+	blockWidth := 50
+	blockHeight := 50
+
+	img := image.NewPaletted(image.Rect(0, 0, 500, 2000), palette)
+
+	for index, stack := range event {
+		length := stack.Len()
+		for i := length - 1; i >= 0; i-- {
+			x := index * blockWidth
+			y := 1999 - (length-i)*blockHeight
+			box := image.Rect(x+1, y+1, x+blockWidth-2, y+blockHeight-2)
+			//boxImage := img.SubImage(box)
+			draw.Draw(img, box, &image.Uniform{color.RGBA{0x00, 0x00, 0xff, 0xff}}, image.Point{}, draw.Src)
+			//draw.Draw(img, boxImage.Bounds(), &image.Uniform{color.Black}, image.ZP, draw.Src)
+		}
+	}
+
+	return img
 }
