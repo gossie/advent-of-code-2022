@@ -28,7 +28,7 @@ func lineLength(filename string) int {
 	return len(scanner.Text())
 }
 
-func readData(filename string, stacks chan<- []util.Stack, instructions chan<- instruction) {
+func readData(filename string, stacks chan<- []util.Stack[string], instructions chan<- instruction) {
 	file, err := os.Open(filename)
 	if err != nil {
 		panic("failed opening file")
@@ -36,7 +36,7 @@ func readData(filename string, stacks chan<- []util.Stack, instructions chan<- i
 	defer file.Close()
 
 	numberOfStacks := (lineLength(filename) + 1) / 4
-	importedStacks := make([]util.Stack, numberOfStacks)
+	importedStacks := make([]util.Stack[string], numberOfStacks)
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
@@ -71,7 +71,7 @@ func readData(filename string, stacks chan<- []util.Stack, instructions chan<- i
 }
 
 func Crates9000(filename string) string {
-	stacks := make(chan []util.Stack, 1)
+	stacks := make(chan []util.Stack[string], 1)
 	instructions := make(chan instruction, 10)
 
 	go readData(filename, stacks, instructions)
@@ -97,7 +97,7 @@ func Crates9000(filename string) string {
 }
 
 func Crates9001(filename string) string {
-	stacks := make(chan []util.Stack, 1)
+	stacks := make(chan []util.Stack[string], 1)
 	instructions := make(chan instruction, 10)
 
 	go readData(filename, stacks, instructions)
