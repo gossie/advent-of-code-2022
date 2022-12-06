@@ -20,20 +20,15 @@ func readData(filename string) string {
 
 func PacketMarker(filename string) int {
 	input := readData(filename)
-
-	length := 4
-	for index := range input {
-		if areDisjunct(input, index, length) {
-			return index + length
-		}
-	}
-	panic("found nothing")
+	return determineMarker(input, 4)
 }
 
 func MessageMarker(filename string) int {
 	input := readData(filename)
+	return determineMarker(input, 14)
+}
 
-	length := 14
+func determineMarker(input string, length int) int {
 	for index := range input {
 		if areDisjunct(input, index, length) {
 			return index + length
