@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gossie/adventofcode2022/day1"
+	"github.com/gossie/adventofcode2022/day10"
 	"github.com/gossie/adventofcode2022/day2"
 	"github.com/gossie/adventofcode2022/day3"
 	"github.com/gossie/adventofcode2022/day4"
@@ -50,4 +51,9 @@ func main() {
 	fmt.Println("\nPerforming tasks of day 9")
 	fmt.Println("Day 9, task 1: ", day9.Visited("day9/day9.txt", 2))
 	fmt.Println("Day 9, task 2: ", day9.Visited("day9/day9.txt", 10))
+
+	fmt.Println("\nPerforming tasks of day 10")
+	fmt.Println("Day 10, task 1: ", day10.SignalStrength("day10/day10.txt"))
+	fmt.Println("Day 10, task 2: ")
+	day10.Sprite("day10/day10.txt")
 }

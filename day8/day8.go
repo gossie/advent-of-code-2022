@@ -2,6 +2,7 @@ package day8
 
 import (
 	"bufio"
+	"math"
 	"os"
 )
 
@@ -99,10 +100,7 @@ func ScenicScore(filename string) int {
 		row := grid[y]
 		for x := 1; x < len(row)-1; x++ {
 			currentScore := scenicScoreFromTop(grid, y, x, row[x]) * scenicScoreFromBottom(grid, y, x, row[x]) * scenicScoreFromLeft(grid, y, x, row[x]) * scenicScoreFromRight(grid, y, x, row[x])
-			if currentScore > highestScenicScore {
-				highestScenicScore = currentScore
-			}
-			//highestScenicScore = int(math.Max(float64(highestScenicScore), float64(currentScore)))
+			highestScenicScore = int(math.Max(float64(highestScenicScore), float64(currentScore)))
 		}
 
 	}
