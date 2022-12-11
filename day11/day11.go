@@ -121,13 +121,13 @@ func readData(filename string) []*monkey {
 			if strings.ContainsRune(function, '+') {
 				summand, err := strconv.Atoi(strings.TrimSpace(strings.Split(function, "+")[1]))
 				if err != nil {
-					summand = -1
+					summand = -1 // old was used as variable
 				}
 				currentMonkey.operation = &operation{op: "+", factor: summand}
 			} else if strings.ContainsRune(function, '*') {
 				factor, err := strconv.Atoi(strings.TrimSpace(strings.Split(function, "*")[1]))
 				if err != nil {
-					factor = -1
+					factor = -1 // old was used as variable
 				}
 				currentMonkey.operation = &operation{op: "*", factor: factor}
 			} else {
