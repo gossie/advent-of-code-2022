@@ -6,6 +6,7 @@ import (
 	"github.com/gossie/adventofcode2022/day1"
 	"github.com/gossie/adventofcode2022/day10"
 	"github.com/gossie/adventofcode2022/day11"
+	"github.com/gossie/adventofcode2022/day12"
 	"github.com/gossie/adventofcode2022/day2"
 	"github.com/gossie/adventofcode2022/day3"
 	"github.com/gossie/adventofcode2022/day4"
@@ -61,4 +62,8 @@ func main() {
 	fmt.Println("\nPerforming tasks of day 11")
 	fmt.Println("Day 11, task 1: ", day11.MonkeyBusiness("day11/day11.txt"))
 	fmt.Println("Day 11, task 2: ", day11.MonkeyBusinessWithoutRelief("day11/day11.txt"))
+
+	fmt.Println("\nPerforming tasks of day 12")
+	fmt.Println("Day 12, task 1: ", day12.ShortestClimb("day12/day12.txt"))
+	fmt.Println("Day 12, task 2: ", day12.ShortestStartingPoint("day12/day12.txt"))
 }
