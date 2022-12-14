@@ -7,6 +7,8 @@ import (
 	"github.com/gossie/adventofcode2022/day10"
 	"github.com/gossie/adventofcode2022/day11"
 	"github.com/gossie/adventofcode2022/day12"
+	"github.com/gossie/adventofcode2022/day13"
+	"github.com/gossie/adventofcode2022/day14"
 	"github.com/gossie/adventofcode2022/day2"
 	"github.com/gossie/adventofcode2022/day3"
 	"github.com/gossie/adventofcode2022/day4"
@@ -66,4 +68,12 @@ func main() {
 	fmt.Println("\nPerforming tasks of day 12")
 	fmt.Println("Day 12, task 1: ", day12.ShortestClimb("day12/day12.txt"))
 	fmt.Println("Day 12, task 2: ", day12.ShortestStartingPoint("day12/day12.txt"))
+
+	fmt.Println("\nPerforming tasks of day 13")
+	fmt.Println("Day 13, task 1: ", day13.CorrectOrder("day13/day13.txt"))
+	fmt.Println("Day 13, task 1: ", day13.DecoderKey("day13/day13.txt"))
+
+	fmt.Println("\nPerforming tasks of day 14")
+	fmt.Println("Day 14, task 1: ", day14.Sand1("day14/day14.txt"))
+	fmt.Println("Day 14, task 1: ", day14.Sand2("day14/day14.txt"))
 }
