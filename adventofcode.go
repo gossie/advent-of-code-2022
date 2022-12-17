@@ -10,6 +10,7 @@ import (
 	"github.com/gossie/adventofcode2022/day13"
 	"github.com/gossie/adventofcode2022/day14"
 	"github.com/gossie/adventofcode2022/day15"
+	"github.com/gossie/adventofcode2022/day16"
 	"github.com/gossie/adventofcode2022/day2"
 	"github.com/gossie/adventofcode2022/day3"
 	"github.com/gossie/adventofcode2022/day4"
@@ -81,4 +82,8 @@ func main() {
 	fmt.Println("\nPerforming tasks of day 15")
 	fmt.Println("Day 15, task 1: ", day15.NumberOfPositionsWithoutBeacon("day15/day15.txt", 2000000))
 	fmt.Println("Day 15, task 1: ", day15.TuningFrequency("day15/day15.txt", 4000000))
+
+	fmt.Println("\nPerforming tasks of day 16")
+	fmt.Println("Day 16, task 1: ", day16.PressureReleased("day16/day16.txt"))
+	fmt.Println("Day 16, task 2: ", day16.PressureReleasedWithElephant("day16/day16.txt"))
 }

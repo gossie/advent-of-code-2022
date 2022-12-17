@@ -2,6 +2,7 @@ package day1
 
 import (
 	"bufio"
+	"math"
 	"os"
 	"sort"
 	"strconv"
@@ -54,9 +55,7 @@ func Calories(filename string) uint32 {
 		for _, c := range elf.calorieItems {
 			sum += c
 		}
-		if sum > max {
-			max = sum
-		}
+		max = uint32(math.Max(float64(max), float64(sum)))
 	}
 	return max
 }

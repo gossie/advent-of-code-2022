@@ -126,14 +126,14 @@ func readData(filename string) ([]*sensor, map[point]*beacon) {
 
 func NumberOfPositionsWithoutBeacon(filename string, y int) int {
 	sensors, beacons := readData(filename)
-	beanonFreeAreas := make([]beaconFreeArray, 0)
+	beaconFreeAreas := make([]beaconFreeArray, 0)
 
 	for _, sensor := range sensors {
-		beanonFreeAreas = append(beanonFreeAreas, beaconFreeArray{sensor.position, sensor.manhattenDistanceToBeacon()})
+		beaconFreeAreas = append(beaconFreeAreas, beaconFreeArray{sensor.position, sensor.manhattenDistanceToBeacon()})
 	}
 
 	positions := make(map[point]bool)
-	for _, area := range beanonFreeAreas {
+	for _, area := range beaconFreeAreas {
 		if area.containsYCoordinate(y) {
 			area.countBeaconFreePostions(y, beacons, positions)
 		}
@@ -151,13 +151,13 @@ func TuningFrequency(filename string, maxXY int) uint64 {
 	}
 
 	for y := 0; y <= maxXY; y++ {
-	outer:
+	xloop:
 		for x := 0; x <= maxXY; x++ {
 			p := point{x, y}
 			for _, bfa := range beanonFreeAreas {
 				if found, newX := bfa.includes(p); found {
 					x = newX
-					continue outer
+					continue xloop
 				}
 			}
 			return uint64(p.x)*4000000 + uint64(p.y)
