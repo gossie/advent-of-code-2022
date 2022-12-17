@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var resultCache = make(map[string]int)
+var resultCache map[string]int
 
 func createKey(s *state) string {
 	return s.current.name + strconv.Itoa(s.openValves) + strconv.Itoa(s.timeLeft) + strconv.Itoa(s.numberOfElephants)
@@ -96,10 +96,12 @@ func possiblePaths(current *state) int {
 
 func PressureReleased(filename string) int {
 	valves := readData(filename)
+	resultCache = make(map[string]int)
 	return possiblePaths(&state{valves["AA"], valves, 0, 30, 0, 0})
 }
 
 func PressureReleasedWithElephant(filename string) int {
 	valves := readData(filename)
+	resultCache = make(map[string]int)
 	return possiblePaths(&state{valves["AA"], valves, 0, 26, 1, 0})
 }
