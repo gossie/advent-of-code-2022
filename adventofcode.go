@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"time"
 
 	"github.com/gossie/adventofcode2022/day1"
 	"github.com/gossie/adventofcode2022/day10"
@@ -11,6 +12,8 @@ import (
 	"github.com/gossie/adventofcode2022/day14"
 	"github.com/gossie/adventofcode2022/day15"
 	"github.com/gossie/adventofcode2022/day16"
+	"github.com/gossie/adventofcode2022/day18"
+	"github.com/gossie/adventofcode2022/day19"
 	"github.com/gossie/adventofcode2022/day2"
 	"github.com/gossie/adventofcode2022/day3"
 	"github.com/gossie/adventofcode2022/day4"
@@ -86,4 +89,16 @@ func main() {
 	fmt.Println("\nPerforming tasks of day 16")
 	fmt.Println("Day 16, task 1: ", day16.PressureReleased("day16/day16.txt"))
 	fmt.Println("Day 16, task 2: ", day16.PressureReleasedWithElephant("day16/day16.txt"))
+
+	fmt.Println("\nPerforming tasks of day 18")
+	fmt.Println("Day 18, task 1: ", day18.Part1("day18/day18.txt"))
+
+	fmt.Println("\nPerforming tasks of day 19")
+	startDay19Part1 := time.Now().UnixMilli()
+	day19Part1 := day19.Part1("day19/day19.txt")
+	fmt.Println("Day 19, task 1: ", day19Part1, ", took", (time.Now().UnixMilli() - startDay19Part1), "ms")
+	startDay19Part2 := time.Now().UnixMilli()
+	day19Part2 := day19.Part2("day19/day19.txt")
+	fmt.Println("Day 19, task 2: ", day19Part2, ", took", (time.Now().UnixMilli() - startDay19Part2), "ms")
+
 }
