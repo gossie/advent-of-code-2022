@@ -105,7 +105,7 @@ func compareLists(left, right []any) int {
 	return len(left) - len(right)
 }
 
-func CorrectOrder(filename string) int {
+func Part1(filename string) int {
 	pairs := make(chan pair, 10)
 
 	go readData(filename, pairs)
@@ -121,7 +121,7 @@ func CorrectOrder(filename string) int {
 	return correct
 }
 
-func DecoderKey(filename string) int {
+func Part2(filename string) int {
 	pairs := make(chan pair, 10)
 
 	go readData(filename, pairs)

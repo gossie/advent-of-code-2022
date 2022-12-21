@@ -163,7 +163,7 @@ func highestY(points map[point]bool) int {
 	return heighestY
 }
 
-func Sand1(filename string) int {
+func Part1(filename string) int {
 	points := readData(filename)
 
 	highestY := highestY(points)
@@ -181,7 +181,7 @@ func Sand1(filename string) int {
 	return sandDrops
 }
 
-func Sand2(filename string) int {
+func Part2(filename string) int {
 	points := readData(filename)
 
 	highestY := highestY(points) + 1

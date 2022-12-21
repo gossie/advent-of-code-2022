@@ -48,7 +48,7 @@ func readData(filename string, instructions chan instruction) {
 	close(instructions)
 }
 
-func SignalStrength(filename string) int64 {
+func Part1(filename string) int64 {
 	instructions := make(chan instruction, 10)
 
 	signalStrength := int64(0)
@@ -74,7 +74,7 @@ func SignalStrength(filename string) int64 {
 	return signalStrength
 }
 
-func Sprite(filename string) {
+func Part2(filename string) {
 	instructions := make(chan instruction, 10)
 
 	go readData(filename, instructions)

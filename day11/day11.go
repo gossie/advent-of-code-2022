@@ -154,7 +154,7 @@ func readData(filename string) []*monkey {
 	return monkeys
 }
 
-func MonkeyBusiness(filename string) int {
+func Part1(filename string) int {
 	monkeys := readData(filename)
 
 	for round := 0; round < 20; round++ {
@@ -180,7 +180,7 @@ func MonkeyBusiness(filename string) int {
 	return monkeys[len(monkeys)-1].inspectedItems * monkeys[len(monkeys)-2].inspectedItems
 }
 
-func MonkeyBusinessWithoutRelief(filename string) uint64 {
+func Part2(filename string) uint64 {
 	monkeys := readData(filename)
 
 	for round := 0; round < 10000; round++ {

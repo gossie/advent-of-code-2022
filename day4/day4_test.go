@@ -1,21 +1,21 @@
-package day4
+package day4_test
 
 import (
 	"testing"
+
+	"github.com/gossie/adventofcode2022/day4"
 )
 
-func TestTask1(t *testing.T) {
-	pairs := SubsumingPairs("day4_test.txt")
-	if pairs != 2 {
-		t.Fatalf("pairs = %v", pairs)
-
+func TestPart1(t *testing.T) {
+	part1 := day4.Part1("day4_test.txt")
+	if part1 != 2 {
+		t.Fatalf("part1 = %v", part1)
 	}
 }
 
-func TestTask2(t *testing.T) {
-	pairs := OverlappingPairs("day4_test.txt")
-	if pairs != 4 {
-		t.Fatalf("pairs = %v", pairs)
-
+func TestPart2(t *testing.T) {
+	part2 := day4.Part2("day4_test.txt")
+	if part2 != 4 {
+		t.Fatalf("part2 = %v", part2)
 	}
 }

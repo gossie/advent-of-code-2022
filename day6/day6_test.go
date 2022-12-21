@@ -1,17 +1,21 @@
-package day6
+package day6_test
 
-import "testing"
+import (
+	"testing"
 
-func TestPacketMarker(t *testing.T) {
-	digits := PacketMarker("day6_test.txt")
-	if digits != 7 {
-		t.Fatalf("digits = %v", digits)
+	"github.com/gossie/adventofcode2022/day6"
+)
+
+func TestPart1(t *testing.T) {
+	part1 := day6.Part1("day6_test.txt")
+	if part1 != 7 {
+		t.Fatalf("part1 = %v", part1)
 	}
 }
 
-func TestMessageMarker(t *testing.T) {
-	digits := MessageMarker("day6_test.txt")
-	if digits != 19 {
-		t.Fatalf("digits = %v", digits)
+func TestPart2(t *testing.T) {
+	part2 := day6.Part2("day6_test.txt")
+	if part2 != 19 {
+		t.Fatalf("part2 = %v", part2)
 	}
 }

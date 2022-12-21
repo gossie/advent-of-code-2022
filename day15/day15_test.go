@@ -1,17 +1,21 @@
-package day15
+package day15_test
 
-import "testing"
+import (
+	"testing"
 
-func TestNumberOfPositionsWithoutBeacon(t *testing.T) {
-	positions := NumberOfPositionsWithoutBeacon("day15_test.txt", 10)
-	if positions != 26 {
-		t.Fatalf("positions = %v", positions)
+	"github.com/gossie/adventofcode2022/day15"
+)
+
+func TestPart1(t *testing.T) {
+	part1 := day15.Part1("day15_test.txt", 10)
+	if part1 != 26 {
+		t.Fatalf("part1 = %v", part1)
 	}
 }
 
-func TestTuneFrequency(t *testing.T) {
-	tuningFrequency := TuningFrequency("day15_test.txt", 20)
-	if tuningFrequency != 56000011 {
-		t.Fatalf("tuning frequency = %v", tuningFrequency)
+func TestPart2(t *testing.T) {
+	part2 := day15.Part2("day15_test.txt", 20)
+	if part2 != 56000011 {
+		t.Fatalf("part2 = %v", part2)
 	}
 }

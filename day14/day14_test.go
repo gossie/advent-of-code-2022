@@ -1,17 +1,21 @@
-package day14
+package day14_test
 
-import "testing"
+import (
+	"testing"
 
-func TestSand1(t *testing.T) {
-	sand := Sand1("day14_test.txt")
-	if sand != 24 {
-		t.Fatalf("sand = %v", sand)
+	"github.com/gossie/adventofcode2022/day14"
+)
+
+func TestPart1(t *testing.T) {
+	part1 := day14.Part1("day14_test.txt")
+	if part1 != 24 {
+		t.Fatalf("part1 = %v", part1)
 	}
 }
 
-func TestSand2(t *testing.T) {
-	sand := Sand2("day14_test.txt")
-	if sand != 93 {
-		t.Fatalf("sand = %v", sand)
+func TestPart2(t *testing.T) {
+	part2 := day14.Part2("day14_test.txt")
+	if part2 != 93 {
+		t.Fatalf("part2 = %v", part2)
 	}
 }

@@ -78,7 +78,7 @@ func toResult(stacks []util.Stack[string]) string {
 	return result
 }
 
-func Crates9000(filename string) string {
+func Part1(filename string) string {
 	stacks := make(chan []util.Stack[string], 1)
 	instructions := make(chan instruction, 10)
 
@@ -104,7 +104,7 @@ func Crates9000(filename string) string {
 	return toResult(importedStacks)
 }
 
-func Crates9001(filename string) string {
+func Part2(filename string) string {
 	stacks := make(chan []util.Stack[string], 1)
 	instructions := make(chan instruction, 1)
 

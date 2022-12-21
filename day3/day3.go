@@ -29,7 +29,7 @@ func readData(filename string, rucksacks chan<- rucksack) {
 	close(rucksacks)
 }
 
-func PrioSum(filename string) uint32 {
+func Part1(filename string) uint32 {
 	rucksacks := make(chan rucksack, 10)
 	go readData(filename, rucksacks)
 	sum := uint32(0)
@@ -45,7 +45,7 @@ func PrioSum(filename string) uint32 {
 	return sum
 }
 
-func BatchSum(filename string) uint32 {
+func Part2(filename string) uint32 {
 	rucksacks := make(chan rucksack, 30)
 	go readData(filename, rucksacks)
 	sum := uint32(0)

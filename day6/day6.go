@@ -18,12 +18,12 @@ func readData(filename string) string {
 	return scanner.Text()
 }
 
-func PacketMarker(filename string) int {
+func Part1(filename string) int {
 	input := readData(filename)
 	return determineMarker(input, 4)
 }
 
-func MessageMarker(filename string) int {
+func Part2(filename string) int {
 	input := readData(filename)
 	return determineMarker(input, 14)
 }

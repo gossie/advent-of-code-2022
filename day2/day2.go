@@ -50,7 +50,7 @@ func roundResult(round round) uint32 {
 	}
 }
 
-func Points1(filename string) uint32 {
+func Part1(filename string) uint32 {
 	choiceToPoints := map[string]uint32{
 		"X": 1,
 		"Y": 2,
@@ -94,7 +94,7 @@ func findChoice(round round) uint32 {
 	}
 }
 
-func Points2(filename string) uint32 {
+func Part2(filename string) uint32 {
 	resultToPoints := map[string]uint32{
 		"X": 0,
 		"Y": 3,

@@ -12,7 +12,7 @@ import (
 var cache = make(map[string]int)
 
 func createKey(s *state) string {
-	return fmt.Sprintf("%d%d%d%d%d%d%d%d%d%d%d", s.blueprint.id, s.timeLeft, s.oreRobots, s.clayRobots, s.obsidianRobots, s.geodeRobots, s.ore, s.clay, s.obsidian, s.geode, s.allowedToBuild)
+	return fmt.Sprintf("%d%d%d%d%d%d%d%d%d%d", s.blueprint.id, s.timeLeft, s.oreRobots, s.clayRobots, s.obsidianRobots, s.geodeRobots, s.ore, s.clay, s.obsidian, s.geode)
 }
 
 type costs struct {
@@ -123,18 +123,6 @@ func readData(filename string) []*blueprint {
 func canAfford(s *state, c *costs) bool {
 	return s.ore >= c.ore && s.clay >= c.clay && s.obsidian >= c.obsidian
 }
-
-// func isItPossibleToBuildAnotherGeodeRobot(s *state) bool {
-// 	if s.timeLeft == 0 {
-// 		return false
-// 	}
-
-// 	if s.timeLeft == 1 && s.blueprint.geodeRobot.obsidian > s.obsidian+s.obsidianRobots {
-// 		return false
-// 	}
-
-// 	return true
-// }
 
 func numberOfGeodes(current state) int {
 	if current.timeLeft == 0 {

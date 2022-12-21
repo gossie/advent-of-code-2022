@@ -1,17 +1,21 @@
-package day12
+package day12_test
 
-import "testing"
+import (
+	"testing"
 
-func TestShortestClimb(t *testing.T) {
-	steps := ShortestClimb("day12_test.txt")
-	if steps != 31 {
-		t.Fatalf("steps = %v", steps)
+	"github.com/gossie/adventofcode2022/day12"
+)
+
+func TestPart1(t *testing.T) {
+	part1 := day12.Part1("day12_test.txt")
+	if part1 != 31 {
+		t.Fatalf("part1 = %v", part1)
 	}
 }
 
-func TestShortestStartingPoint(t *testing.T) {
-	steps := ShortestStartingPoint("day12_test.txt")
-	if steps != 29 {
-		t.Fatalf("steps = %v", steps)
+func TestPart2(t *testing.T) {
+	part2 := day12.Part2("day12_test.txt")
+	if part2 != 29 {
+		t.Fatalf("part2 = %v", part2)
 	}
 }

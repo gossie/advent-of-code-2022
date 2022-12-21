@@ -1,14 +1,14 @@
-package day10
+package day10_test
 
-import "testing"
+import (
+	"testing"
 
-func TestSignalStrength(t *testing.T) {
-	signalStrength := SignalStrength("day10_test.txt")
-	if signalStrength != 13140 {
-		t.Fatalf("signal strength = %v", signalStrength)
+	"github.com/gossie/adventofcode2022/day10"
+)
+
+func TestPart1(t *testing.T) {
+	part1 := day10.Part1("day10_test.txt")
+	if part1 != 13140 {
+		t.Fatalf("part1 = %v", part1)
 	}
-}
-
-func TestSprite(t *testing.T) {
-	Sprite("day10_test.txt")
 }

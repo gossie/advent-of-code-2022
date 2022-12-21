@@ -9,11 +9,11 @@ import (
 )
 
 type elf struct {
-	calorieItems []uint32
+	calorieItems []int
 }
 
-func (e elf) totalCalories() uint32 {
-	sum := uint32(0)
+func (e elf) totalCalories() int {
+	sum := 0
 	for _, calorieItem := range e.calorieItems {
 		sum += calorieItem
 	}
@@ -27,7 +27,7 @@ func readData(filename string, elves chan<- elf) {
 	}
 	defer file.Close()
 
-	lines := make([]uint32, 0)
+	lines := make([]int, 0)
 
 	scanner := bufio.NewScanner(file)
 	scanner.Split(bufio.ScanLines)
@@ -35,36 +35,36 @@ func readData(filename string, elves chan<- elf) {
 		line := scanner.Text()
 		if line == "" {
 			elves <- elf{lines}
-			lines = make([]uint32, 0)
+			lines = make([]int, 0)
 		} else {
 			i, _ := strconv.Atoi(line)
-			lines = append(lines, uint32(i))
+			lines = append(lines, i)
 		}
 	}
 	elves <- elf{lines}
 	close(elves)
 }
 
-func Calories(filename string) uint32 {
+func Part1(filename string) int {
 	elves := make(chan elf, 10)
 	go readData(filename, elves)
 
-	max := uint32(0)
+	max := 0
 	for elf := range elves {
-		sum := uint32(0)
+		sum := 0
 		for _, c := range elf.calorieItems {
 			sum += c
 		}
-		max = uint32(math.Max(float64(max), float64(sum)))
+		max = int(math.Max(float64(max), float64(sum)))
 	}
 	return max
 }
 
-func CaloriesTop3(filename string) uint32 {
+func Part2(filename string) int {
 	elves := make(chan elf, 10)
 	go readData(filename, elves)
 
-	allCalories := make([]uint32, 0)
+	allCalories := make([]int, 0)
 
 	for elf := range elves {
 		allCalories = append(allCalories, elf.totalCalories())

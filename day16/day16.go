@@ -94,13 +94,13 @@ func possiblePaths(current *state) int {
 	return pressure
 }
 
-func PressureReleased(filename string) int {
+func Part1(filename string) int {
 	valves := readData(filename)
 	resultCache = make(map[string]int)
 	return possiblePaths(&state{valves["AA"], valves, 0, 30, 0, 0})
 }
 
-func PressureReleasedWithElephant(filename string) int {
+func Part2(filename string) int {
 	valves := readData(filename)
 	resultCache = make(map[string]int)
 	return possiblePaths(&state{valves["AA"], valves, 0, 26, 1, 0})

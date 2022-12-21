@@ -7,15 +7,8 @@ import (
 )
 
 func TestPart1(t *testing.T) {
-	result := day19.Part1("day19_test.txt")
-	if result != 33 {
-		t.Fatalf("result = %v", result)
+	part1 := day19.Part1("day19_test.txt")
+	if part1 != 33 {
+		t.Fatalf("part1 = %v", part1)
 	}
-}
-
-func TestPart2(t *testing.T) {
-	// result := day19.Part2("day19_test.txt")
-	// if result != 62 {
-	// 	t.Fatalf("result = %v", result)
-	// }
 }

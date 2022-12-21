@@ -1,19 +1,21 @@
-package day1
+package day1_test
 
 import (
 	"testing"
+
+	"github.com/gossie/adventofcode2022/day1"
 )
 
-func TestTask1(t *testing.T) {
-	calories := Calories("day1_test.txt")
-	if calories != 24000 {
-		t.Fatalf("calories = %v", calories)
+func TestPart1(t *testing.T) {
+	part1 := day1.Part1("day1_test.txt")
+	if part1 != 24000 {
+		t.Fatalf("part1 = %v", part1)
 	}
 }
 
-func TestTask2(t *testing.T) {
-	calories := CaloriesTop3("day1_test.txt")
-	if calories != 45000 {
-		t.Fatalf("calories = %v", calories)
+func TestPart2(t *testing.T) {
+	part2 := day1.Part2("day1_test.txt")
+	if part2 != 45000 {
+		t.Fatalf("part2 = %v", part2)
 	}
 }

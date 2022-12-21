@@ -65,7 +65,7 @@ func readData(filename string, pairs chan<- pair) {
 	close(pairs)
 }
 
-func SubsumingPairs(filename string) int32 {
+func Part1(filename string) int32 {
 	pairs := make(chan pair, 10)
 	// events := make(chan imageEvent, 10)
 	// done := make(chan bool, 1)
@@ -91,7 +91,7 @@ func SubsumingPairs(filename string) int32 {
 	return sum
 }
 
-func OverlappingPairs(filename string) int32 {
+func Part2(filename string) int32 {
 	pairs := make(chan pair, 10)
 	// events := make(chan imageEvent, 10)
 	// done := make(chan bool, 1)

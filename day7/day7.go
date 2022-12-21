@@ -106,7 +106,7 @@ func readDirectoryContent(scanner *bufio.Scanner, parent *directory) ([]*directo
 	return subDirectories, files
 }
 
-func SumSizes(filename string) uint64 {
+func Part1(filename string) uint64 {
 	root := readData(filename)
 	sum := uint64(0)
 
@@ -125,7 +125,7 @@ func SumSizes(filename string) uint64 {
 	return sum
 }
 
-func DirectoryDeleteSize(filename string) uint64 {
+func Part2(filename string) uint64 {
 	root := readData(filename)
 	var result uint64 = math.MaxUint64
 

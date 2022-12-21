@@ -31,7 +31,7 @@ func readData(filename string) [][]int {
 	return grid
 }
 
-func VisibleTrees(filename string) int {
+func Part1(filename string) int {
 	grid := readData(filename)
 
 	visible := len(grid)*2 + (len(grid[0])-2)*2
@@ -91,7 +91,7 @@ func visibleFromRight(grid [][]int, posY, posX, heigth int) bool {
 	return true
 }
 
-func ScenicScore(filename string) int {
+func Part2(filename string) int {
 	grid := readData(filename)
 
 	highestScenicScore := 0

@@ -124,7 +124,7 @@ func readData(filename string) ([]*sensor, map[point]*beacon) {
 	return sensors, beacons
 }
 
-func NumberOfPositionsWithoutBeacon(filename string, y int) int {
+func Part1(filename string, y int) int {
 	sensors, beacons := readData(filename)
 	beaconFreeAreas := make([]beaconFreeArray, 0)
 
@@ -142,7 +142,7 @@ func NumberOfPositionsWithoutBeacon(filename string, y int) int {
 	return len(positions)
 }
 
-func TuningFrequency(filename string, maxXY int) uint64 {
+func Part2(filename string, maxXY int) uint64 {
 	sensors, _ := readData(filename)
 	beanonFreeAreas := make([]*beaconFreeArray, 0)
 

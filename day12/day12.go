@@ -150,12 +150,12 @@ func shortestRouteLength(field [][]*point, start, dest *point) int {
 	return bestPath.totalSteps
 }
 
-func ShortestClimb(filename string) int {
+func Part1(filename string) int {
 	field, start, dest := readData(filename)
 	return shortestRouteLength(field, start, dest)
 }
 
-func ShortestStartingPoint(filename string) int {
+func Part2(filename string) int {
 	field, _, dest := readData(filename)
 
 	steps := math.MaxInt
