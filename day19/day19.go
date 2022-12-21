@@ -12,7 +12,7 @@ import (
 var cache = make(map[string]int)
 
 func createKey(s *state) string {
-	return fmt.Sprintf("%d%d%d%d%d%d%d%d%d%d", s.blueprint.id, s.timeLeft, s.oreRobots, s.clayRobots, s.obsidianRobots, s.geodeRobots, s.ore, s.clay, s.obsidian, s.geode)
+	return fmt.Sprintf("%d%d%d%d%d%d%d%d%d%d%d", s.blueprint.id, s.timeLeft, s.oreRobots, s.clayRobots, s.obsidianRobots, s.geodeRobots, s.ore, s.clay, s.obsidian, s.geode, s.allowedToBuild)
 }
 
 type costs struct {
@@ -54,6 +54,7 @@ type state struct {
 	clayRobots                 int
 	obsidianRobots             int
 	geodeRobots                int
+	allowedToBuild             int
 }
 
 func (s *state) subtract(c *costs) {
@@ -146,6 +147,7 @@ func numberOfGeodes(current state) int {
 	}
 
 	max := 0
+	allowedToBuildInNextCollectState := 7
 
 	if canAfford(&current, &current.blueprint.geodeRobot) {
 		newState4 := current
@@ -154,37 +156,47 @@ func numberOfGeodes(current state) int {
 		newState4.subtract(&newState4.blueprint.geodeRobot)
 		newState4.collect()
 		newState4.geodeRobots++
+		newState4.allowedToBuild = 7
 		max = int(math.Max(float64(max), float64(numberOfGeodes(newState4))))
 	} else {
+		if canAfford(&current, &current.blueprint.oreRobot) && current.allowedToBuild&4 > 0 && current.oreRobots*current.timeLeft+current.ore < current.timeLeft*current.blueprint.maxOreCosts() {
+			allowedToBuildInNextCollectState &= 3
 
-		if canAfford(&current, &current.blueprint.oreRobot) && current.oreRobots*current.timeLeft+current.ore < current.timeLeft*current.blueprint.maxOreCosts() {
 			newState1 := current
 			newState1.timeLeft--
 			newState1.subtract(&newState1.blueprint.oreRobot)
 			newState1.collect()
 			newState1.oreRobots++
+			newState1.allowedToBuild = 7
 			max = int(math.Max(float64(max), float64(numberOfGeodes(newState1))))
 		}
 
-		if canAfford(&current, &current.blueprint.clayRobot) && current.clayRobots*current.timeLeft+current.clay < current.timeLeft*current.blueprint.maxClayCosts() {
+		if canAfford(&current, &current.blueprint.clayRobot) && current.allowedToBuild&2 > 0 && current.clayRobots*current.timeLeft+current.clay < current.timeLeft*current.blueprint.maxClayCosts() {
+			allowedToBuildInNextCollectState &= 5
+
 			newState2 := current
 			newState2.timeLeft--
 			newState2.subtract(&newState2.blueprint.clayRobot)
 			newState2.collect()
 			newState2.clayRobots++
+			newState2.allowedToBuild = 7
 			max = int(math.Max(float64(max), float64(numberOfGeodes(newState2))))
 		}
 
-		if canAfford(&current, &current.blueprint.obsidianRobot) && current.obsidianRobots*current.timeLeft+current.obsidian < current.timeLeft*current.blueprint.maxObsidianCosts() {
+		if canAfford(&current, &current.blueprint.obsidianRobot) && current.allowedToBuild&1 > 0 && current.obsidianRobots*current.timeLeft+current.obsidian < current.timeLeft*current.blueprint.maxObsidianCosts() {
+			allowedToBuildInNextCollectState |= 6
+
 			newState3 := current
 			newState3.timeLeft--
 			newState3.subtract(&newState3.blueprint.obsidianRobot)
 			newState3.collect()
 			newState3.obsidianRobots++
+			newState3.allowedToBuild = 7
 			max = int(math.Max(float64(max), float64(numberOfGeodes(newState3))))
 		}
 
 		newState5 := current
+		newState5.allowedToBuild = allowedToBuildInNextCollectState
 		newState5.timeLeft--
 		newState5.collect()
 		max = int(math.Max(float64(max), float64(numberOfGeodes(newState5))))
@@ -200,7 +212,7 @@ func Part1(filename string) int {
 
 	result := 0
 	for _, bp := range blueprints {
-		s := state{blueprint: bp, timeLeft: 24, oreRobots: 1}
+		s := state{blueprint: bp, timeLeft: 24, oreRobots: 1, allowedToBuild: 7}
 		result += bp.id * numberOfGeodes(s)
 	}
 	return result
@@ -211,7 +223,7 @@ func Part2(filename string) int {
 
 	result := 1
 	for i := 0; i < 3; i++ {
-		s := state{blueprint: blueprints[i], timeLeft: 32, oreRobots: 1}
+		s := state{blueprint: blueprints[i], timeLeft: 32, oreRobots: 1, allowedToBuild: 7}
 		result *= numberOfGeodes(s)
 	}
 	return result
