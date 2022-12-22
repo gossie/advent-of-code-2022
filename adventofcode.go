@@ -24,6 +24,7 @@ import (
 	"github.com/gossie/adventofcode2022/day7"
 	"github.com/gossie/adventofcode2022/day8"
 	"github.com/gossie/adventofcode2022/day9"
+    "github.com/gossie/adventofcode2022/day21"
 )
 
 func main() {
@@ -187,4 +188,12 @@ func main() {
 	startday20Part2 := time.Now().UnixMilli()
 	day20Part2 := day20.Part2("day20/day20.txt")
 	fmt.Println("day20, task 2: ", day20Part2, ", took", (time.Now().UnixMilli() - startday20Part2), "ms")
+
+    fmt.Println("\nPerforming tasks of day21")
+    startday21Part1 := time.Now().UnixMilli()
+    day21Part1 := day21.Part1("day21/day21.txt")
+    fmt.Println("day21, task 1: ", day21Part1, ", took", (time.Now().UnixMilli() - startday21Part1), "ms")
+    startday21Part2 := time.Now().UnixMilli()
+    day21Part2 := day21.Part2("day21/day21.txt")
+    fmt.Println("day21, task 2: ", day21Part2, ", took", (time.Now().UnixMilli() - startday21Part2), "ms")
 }
